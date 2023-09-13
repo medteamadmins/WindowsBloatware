@@ -34,4 +34,7 @@ Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\TCO Cert
 Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk" -Recurse
 Remove-Item -Path "c:\Users\Public\Desktop\Microsoft Edge.lnk" -Recurse
 
+#Remove Chat feature
+Get-AppxPackage MicrosoftTeams* | Remove-AppxPackage
+
 invoke-expression -Command $templateFilePath
