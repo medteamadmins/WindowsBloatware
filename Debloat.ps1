@@ -1,20 +1,15 @@
 $DebloatFolder = "C:\ProgramData\Debloat"
 If (Test-Path $DebloatFolder) {
     Write-Output "$DebloatFolder exists. Skipping."
-    New-Item C:\DebloatFolderExists.txt
 }
 Else {
-    New-Item C:\BeginningDebloatFolderCreation.txt
     Write-Output "The folder '$DebloatFolder' doesn't exist. This folder will be used for storing logs created after the script runs. Creating now."
     Start-Sleep 1
     New-Item -Path "$DebloatFolder" -ItemType Directory
     Write-Output "The folder $DebloatFolder was successfully created."
-    New-Item C:\DebloatFolderCreationSuccessful.txt
 }
 
 $templateFilePath = "C:\ProgramData\Debloat\removebloat.ps1"
-
-New-Item C:\BeginningPowershellDownload.txt
 
 Invoke-WebRequest `
 -Uri "https://raw.githubusercontent.com/andrew-s-taylor/public/main/De-Bloat/RemoveBloat.ps1" `
@@ -22,6 +17,21 @@ Invoke-WebRequest `
 -UseBasicParsing `
 -Headers @{"Cache-Control"="no-cache"}
 
-New-Item C:\DownloadedPowershellSuccessful.txt
+
+# Remove Amazon 
+Remove-Item -Path "C:\Program Files (x86)\Online Services\Amazon" -Recurse
+Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\Amazon.com.lnk" -Recurse
+
+# Remove Adobe Offers
+Remove-Item -Path "C:\Program Files (x86)\Online Services\Adobe" -Recurse
+Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\Adobe offers.lnk" -Recurse
+
+# Remove TCO-Certified
+Remove-Item -Path "C:\ProgramData\HP\TCO" -Recurse
+Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\TCO Certified.lnk" -Recurse
+
+#Remove MS Edge from Desktop
+Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsoft Edge.lnk" -Recurse
+Remove-Item -Path "c:\Users\Public\Desktop\Microsoft Edge.lnk" -Recurse
 
 invoke-expression -Command $templateFilePath
