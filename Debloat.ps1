@@ -35,6 +35,7 @@ Remove-Item -Path "c:\ProgramData\Microsoft\Windows\Start Menu\Programs\Microsof
 Remove-Item -Path "c:\Users\Public\Desktop\Microsoft Edge.lnk" -Recurse
 
 #Remove Chat feature
-Get-AppxPackage MicrosoftTeams* | Remove-AppxPackage
+REG ADD "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /f /v TaskbarMn /t REG_DWORD /d 0
+REG ADD "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Chat" /f /v ChatIcon /t REG_DWORD /d 3
 
 invoke-expression -Command $templateFilePath
